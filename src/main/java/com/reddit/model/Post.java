@@ -33,6 +33,7 @@ public class Post {
     @Column(name = "created_at")
     @CreatedDate
     LocalDate createdAt;
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDate updatedAt;
@@ -51,7 +52,4 @@ public class Post {
 
 //    @OneToMany
 //    List<Comment> comments;
-
-
-
 }
