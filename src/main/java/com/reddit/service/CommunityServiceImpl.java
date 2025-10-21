@@ -1,6 +1,6 @@
 package com.reddit.service;
 
-import com.reddit.dto.CommunityRequest;
+import com.reddit.dto.CommunityDto;
 import com.reddit.model.Community;
 import com.reddit.repo.CommunityRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class CommunityServiceImpl implements CommunityService {
 //    private final UserRepository userRepo; // Assume you have this
 
     @Override
-    public Community createCommunity(CommunityRequest dto) {
+    public Community createCommunity(CommunityDto dto) {
         Community community = Community.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())

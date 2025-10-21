@@ -32,6 +32,10 @@ public class Post {
     // User user;
 
 
+    @ManyToOne
+    @JoinColumn(name = "community_id")
+    Community community;
+
     //List<Community> communities;
     @OneToMany
     List<PostMedia> postMedia;
