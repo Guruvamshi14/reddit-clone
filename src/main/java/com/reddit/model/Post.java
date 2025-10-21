@@ -31,7 +31,7 @@ public class Post {
     LocalDate updatedAt;
     //@OneToMany
     //@JoinColumn(name = "user_id")
-   // User user;
+    // User user;
 
 
     //List<Community> communities;
