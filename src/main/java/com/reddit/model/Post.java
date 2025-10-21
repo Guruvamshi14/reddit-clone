@@ -5,6 +5,9 @@ package com.reddit.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,12 +26,17 @@ public class Post {
 
     @Column(columnDefinition = "TEXT",name = "content")
     String content;
+
     @Column(name = "link_url")
     String linkUrl;
+
     @Column(name = "created_at")
+    @CreatedDate
     LocalDate createdAt;
+    @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDate updatedAt;
+
     //@OneToMany
     //@JoinColumn(name = "user_id")
    // User user;
