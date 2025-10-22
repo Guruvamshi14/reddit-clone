@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -37,4 +37,17 @@ public class User {
     private String bio;
 
     private Instant lastLogin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Community> ownedCommunities;
+
+    @ManyToMany(mappedBy = "allowedMembers")
+    private List<Community> allowedCommunities;
+
 }
