@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Communities</title></head>
+<body>
+<h2>All Communities</h2>
+<ul>
+    <li th:each="c : ${communities}">
+        <b th:text="${c.name}"></b> - <span th:text="${c.description}"></span>
+    </li>
+</ul>
+<a th:href="@{/community/new}">+ Create New</a>
+</body>
+</html>

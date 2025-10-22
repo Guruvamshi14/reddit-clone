@@ -6,6 +6,7 @@ import com.reddit.repo.CommunityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,32 +14,40 @@ import java.util.Optional;
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityRepository communityRepo;
-//    private final UserRepository userRepo; // Assume you have this
+    // private final UserRepository userRepo; // Uncomment if you have auth context
 
     @Override
     public Community createCommunity(CommunityDto dto) {
+        if (dto.getTopics() != null && dto.getTopics().size() > 3) {
+            throw new IllegalArgumentException("Max 3 topics allowed per community.");
+        }
+
+        // TODO: Replace with logged-in user from SecurityContextHolder
+        // User owner = userRepo.findById(currentUserId).orElseThrow(...);
+
         Community community = Community.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
+                .name(dto.getName().trim())
+                .description(dto.getDescription().trim())
                 .bannerImageUrl(dto.getBannerImageUrl())
                 .iconImageUrl(dto.getIconImageUrl())
                 .type(dto.getType())
                 .mature(dto.isMature())
                 .topics(dto.getTopics())
-                .createdDate(LocalDateTime.now())
                 .rules(dto.getRules())
+                .createdDate(LocalDateTime.now())
+                // .owner(owner)
                 .build();
 
-        // Allowed members logic
-        if (dto.getAllowedMemberIds() != null) {
-//            community.setAllowedMembers(userRepo.findAllById(dto.getAllowedMemberIds()));
-        }
-        // Posts logic can be added similarly
         return communityRepo.save(community);
     }
 
     @Override
     public Optional<Community> findByName(String name) {
         return communityRepo.findByName(name);
+    }
+
+    @Override
+    public List<Community> getAll() {
+        return communityRepo.findAll();
     }
 }

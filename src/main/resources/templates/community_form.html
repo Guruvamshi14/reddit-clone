@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Community</title>
     <style>
-        form {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: auto;
-}
-input, textarea, select, button {
-    margin: 8px 0;
-}
+        form { max-width: 500px; margin: auto; display: flex; flex-direction: column; }
+        input, textarea, select, button { margin: 8px 0; padding: 8px; }
+        .error { color: red; font-size: 0.9em; }
     </style>
 </head>
 <body>
+<h2>Create a Community</h2>
 
-<form th:action="@{/community/new}" th:object="${communityDto}" method="post" style="display: flex; flex-direction: column; max-width: 500px;">
-    <input th:field="*{name}" placeholder="Community Name" required />
-    <textarea th:field="*{description}" placeholder="Description" required></textarea>
-    <input th:field="*{bannerImageUrl}" placeholder="Banner URL" />
-    <input th:field="*{iconImageUrl}" placeholder="Icon URL" />
+<form th:action="@{/community/new}" th:object="${communityDto}" method="post">
+    <input th:field="*{name}" placeholder="Community Name" />
+    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <textarea th:field="*{description}" placeholder="Description"></textarea>
+    <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+
+    <input th:field="*{bannerImageUrl}" placeholder="Banner Image URL" />
+    <input th:field="*{iconImageUrl}" placeholder="Icon Image URL" />
+
     <select th:field="*{type}">
         <option th:each="type : ${typeOptions}" th:value="${type}" th:text="${type}"></option>
     </select>
+
     <label><input type="checkbox" th:field="*{mature}" /> Mature (18+)</label>
-    <select th:field="*{topics}" multiple size="5">
+
+    <label>Topics (max 3):</label>
+    <select th:field="*{topics}" multiple size="6">
         <option th:each="topic : ${topicsList}" th:value="${topic}" th:text="${topic}"></option>
     </select>
-    <button type="submit">Create</button>
+
+    <button type="submit">Create Community</button>
 </form>
 
 </body>
