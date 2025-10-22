@@ -16,12 +16,6 @@ public class CommunityController {
 
     private final CommunityService communityService;
 
-    @GetMapping("/")
-    @ResponseBody
-    public String showCreateForm() {
-        return "Community form endpoint working!";
-    }
-
     @GetMapping("/community/new")
     public String showCreateForm(Model model) {
         model.addAttribute("communityDto", new CommunityDto());
