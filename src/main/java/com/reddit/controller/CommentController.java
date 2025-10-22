@@ -1,6 +1,4 @@
 package com.reddit.controller;
-
-import com.reddit.model.Comment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

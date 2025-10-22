@@ -26,9 +26,6 @@ public class CommentService {
         Comment parentComment = commentRepo.findById(commentRequestDto.getParentCommentId())
                 .orElseThrow(()-> new RuntimeException("Parent comment not present"));
         Comment comment = CommentRequestDto.dtoToEntity(commentRequestDto,post,parentComment);
-        CommentVote vote = new CommentVote();
-        vote.setComment(comment);
-        commentVoteRepo.save(vote);
-        return commentRepo.save(comment).orElseThrow(()-> new RuntimeException("Comment not saved!"));
+        return commentRepo.save(comment);
     }
 }
