@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CommentRepo extends JpaRepository<Comment, Long> {
     Optional<Comment> findById(Long aLong);
-    Optional<Comment> save(Comment entity);
+    Comment save(Comment entity);
 }

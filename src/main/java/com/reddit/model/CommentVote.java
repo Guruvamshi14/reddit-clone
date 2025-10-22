@@ -17,7 +17,9 @@ public class CommentVote {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-//    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private Boolean isUpvote;
 }
