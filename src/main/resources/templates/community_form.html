@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+}
+input, textarea, select, button {
+    margin: 8px 0;
+}
+    </style>
+</head>
+<body>
+
+<form th:action="@{/community/new}" th:object="${communityDto}" method="post" style="display: flex; flex-direction: column; max-width: 500px;">
+    <input th:field="*{name}" placeholder="Community Name" required />
+    <textarea th:field="*{description}" placeholder="Description" required></textarea>
+    <input th:field="*{bannerImageUrl}" placeholder="Banner URL" />
+    <input th:field="*{iconImageUrl}" placeholder="Icon URL" />
+    <select th:field="*{type}">
+        <option th:each="type : ${typeOptions}" th:value="${type}" th:text="${type}"></option>
+    </select>
+    <label><input type="checkbox" th:field="*{mature}" /> Mature (18+)</label>
+    <select th:field="*{topics}" multiple size="5">
+        <option th:each="topic : ${topicsList}" th:value="${topic}" th:text="${topic}"></option>
+    </select>
+    <button type="submit">Create</button>
+</form>
+
+</body>
+</html>

@@ -1,7 +1,5 @@
 package com.reddit.model;
 
-
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,8 +38,12 @@ public class Post {
 
     //@OneToMany
     //@JoinColumn(name = "user_id")
-   // User user;
+    // User user;
 
+
+    @ManyToOne
+    @JoinColumn(name = "community_id")
+    Community community;
 
     //List<Community> communities;
     @OneToMany
