@@ -6,7 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,39 +20,42 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT",name = "title")
-    String title;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String title;
 
-    @Column(columnDefinition = "TEXT",name = "content")
-    String content;
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "link_url")
-    String linkUrl;
+    private String linkUrl;
 
-    @Column(name = "created_at")
     @CreatedDate
-    LocalDate createdAt;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
-    //@OneToMany
-    //@JoinColumn(name = "user_id")
-    // User user;
+    // Many posts made by one user
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+    // Many posts belong to one community (aligned with your Community entity)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_id", nullable = false)
+    private Community community;
 
-    @ManyToOne
-    @JoinColumn(name = "community_id")
-    Community community;
+    // One post -> many media items (e.g., images/videos)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostMedia> postMedia = new ArrayList<>();
 
-    //List<Community> communities;
-    @OneToMany
-    List<PostMedia> postMedia;
+    // One post -> many votes
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostVote> postVotes = new ArrayList<>();
 
-    @OneToMany
-    List<PostVote> postVotes;
-
-//    @OneToMany
-//    List<Comment> comments;
+    // One post -> many comments
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }
